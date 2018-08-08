@@ -1,6 +1,3 @@
-// Decoder to handle unknown types of json data.
-// Designed with webscraping in mind.
-
 package main
 
 import (
@@ -11,10 +8,11 @@ import (
 	"net/http"
 )
 
-// A more generic implementation of http request for reusability.
-// Gets a http response from RESTful api (or any json formatted response).
-// Body of the response is put into a []byte and then unmarshaled into a generic interface which is returned to the calling function.
-// Referenced: https://medium.com/@IndianGuru/consuming-json-apis-with-go-d711efc1dcf9
+// getRESTCall is a more generic implementation of http request for reusability.
+// Gets a http response from RESTful api (or any json formatted response). Body
+// of the response is put into a []byte and then unmarshaled into a generic
+// interface which is returned to the calling function. Referenced:
+// https://medium.com/@IndianGuru/consuming-json-apis-with-go-d711efc1dcf9
 func getRESTCall(url string) interface{} {
 	// Build the request
 	req, err := http.NewRequest("GET", url, nil)
@@ -23,24 +21,20 @@ func getRESTCall(url string) interface{} {
 		return nil
 	}
 
-	// For control over HTTP client headers,
-	// redirect policy, and other settings,
-	// create a Client
-	// A Client is an HTTP client
+	// For control over HTTP client headers, redirect policy, and other
+	// settings, create a Client A Client is an HTTP client
 	client := &http.Client{}
 
-	// Send the request via a client
-	// Do sends an HTTP request and
-	// returns an HTTP response
+	// Send the request via a client Do sends an HTTP request and returns an
+	// HTTP response
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Fatal("http client do error: ", err)
 		return nil
 	}
 
-	// Callers should close resp.Body
-	// when done reading from it
-	// Defer the closing of the body
+	// Callers should close resp.Body when done reading from it Defer the
+	// closing of the body
 	defer resp.Body.Close()
 
 	// Put body of the response into a []byte
@@ -57,6 +51,7 @@ func getRESTCall(url string) interface{} {
 	return unstructuredJSON
 }
 
+// jsonMapper will print out the map of json data collected.
 func jsonMapper(unstructuredJSON interface{}) {
 	jsonBody := unstructuredJSON.(map[string]interface{})
 
@@ -79,10 +74,8 @@ func jsonMapper(unstructuredJSON interface{}) {
 
 func main() {
 
-	// Get input from console
-	// reader := bufio.NewReader(os.Stdin)
-	// fmt.Print("Enter json api http: ")
-	// input, _ := reader.ReadString('\n')
+	// Get input from console reader := bufio.NewReader(os.Stdin)
+	// fmt.Print("Enter json api http: ") input, _ := reader.ReadString('\n')
 
 	// Fot the purpose of testing a test api
 	input := "https://jsonplaceholder.typicode.com/posts/1/comments"
