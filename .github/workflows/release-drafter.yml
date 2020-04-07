@@ -17,3 +17,12 @@ jobs:
           # config-name: my-config.yml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+categories:
+  - title: 'New Release'
+    label: 'feature'
+  - title: 'Fixes'
+    labels:
+      - 'fix'
+      - 'bugfix'
+      - 'bug'
